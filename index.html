@@ -52,7 +52,7 @@ svg{width:100%;height:auto;display:block}
 .footer{color:var(--muted);font-size:.82rem;text-align:center;padding:10px 14px 90px}
 </style>
 </head>
-<body>
+<body class="gate">
 <header>
   <h1>Mi progreso fitness</h1>
   <p class="sub" id="weekInfo"></p>
@@ -65,7 +65,7 @@ svg{width:100%;height:auto;display:block}
   <button data-view="seguimiento">Progreso</button>
   <button data-view="guia">Guía</button>
 </nav>
-<section id="gate"><div class="card"><h2>Entra a tu cuenta</h2><p class="muted">Tus datos se guardan en tu cuenta y los ves desde cualquier dispositivo.</p><div class="field"><label for="email">Correo</label><input id="email" type="email" autocomplete="email" inputmode="email"></div><div class="field"><label for="pass">Contraseña</label><input id="pass" type="password" autocomplete="current-password"></div><div class="btnrow"><button class="btn primary" id="enter">Entrar</button><button class="btn" id="signup">Crear cuenta</button><button class="rest" id="reset">Olvidé mi contraseña</button></div><p class="muted" id="gateMsg" role="status"></p></div></section>
+<section id="gate"><div class="card"><h2>Entra a tu cuenta</h2><p class="muted">Tus datos se guardan en tu cuenta y los ves desde cualquier dispositivo.</p><div class="field"><label for="email">Correo</label><input id="email" type="email" autocomplete="email" inputmode="email"></div><div class="field"><label for="pass">Contraseña</label><input id="pass" type="password" autocomplete="current-password"></div><div class="btnrow"><button class="btn primary" id="enter">Entrar</button><button class="btn" id="signup">Crear cuenta</button><button class="rest" id="reset">Olvidé mi contraseña</button></div><p class="muted" id="gateMsg" role="status">Cargando…</p></div></section>
 <main>
 <section id="inicio" class="view active">
   <div class="grid">
@@ -140,76 +140,17 @@ service cloud.firestore { match /databases/{db}/documents {
   match /usuarios/{uid} { allow read, write: if request.auth != null && request.auth.uid == uid; }
 } }
 -->
+<script>
+/* PEGA AQUÍ TU CONFIGURACIÓN DE FIREBASE: reemplaza cada PEGA_AQUI y deja las comillas */
+window.FIREBASE_CONFIG={apiKey:"PEGA_AQUI",authDomain:"PEGA_AQUI",projectId:"PEGA_AQUI",appId:"PEGA_AQUI"};
+setTimeout(function(){if(!window.__ready){var m=document.getElementById("gateMsg");if(m)m.textContent="La página no terminó de cargar. Revisa que los datos de Firebase estén bien copiados, con comillas y comas, o desactiva el bloqueador del navegador para esta página."}},4000);
+</script>
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut,sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,doc,setDoc,onSnapshot} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-const firebaseConfig={apiKey:"PEGA_AQUI",authDomain:"// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBqYNCaLMVyEtCkrt9q59n9ThrdqttFOJQ",
-  authDomain: "mi-progreso-d5c1c.firebaseapp.com",
-  projectId: "mi-progreso-d5c1c",
-  storageBucket: "mi-progreso-d5c1c.firebasestorage.app",
-  messagingSenderId: "873939371230",
-  appId: "1:873939371230:web:9af82381e3c827c66e2e4f"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);",projectId:"// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBqYNCaLMVyEtCkrt9q59n9ThrdqttFOJQ",
-  authDomain: "mi-progreso-d5c1c.firebaseapp.com",
-  projectId: "mi-progreso-d5c1c",
-  storageBucket: "mi-progreso-d5c1c.firebasestorage.app",
-  messagingSenderId: "873939371230",
-  appId: "1:873939371230:web:9af82381e3c827c66e2e4f"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);",appId:"// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBqYNCaLMVyEtCkrt9q59n9ThrdqttFOJQ",
-  authDomain: "mi-progreso-d5c1c.firebaseapp.com",
-  projectId: "mi-progreso-d5c1c",
-  storageBucket: "mi-progreso-d5c1c.firebasestorage.app",
-  messagingSenderId: "873939371230",
-  appId: "1:873939371230:web:9af82381e3c827c66e2e4f"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);"};
-const configured=!firebaseConfig.apiKey.startsWith("// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBqYNCaLMVyEtCkrt9q59n9ThrdqttFOJQ",
-  authDomain: "mi-progreso-d5c1c.firebaseapp.com",
-  projectId: "mi-progreso-d5c1c",
-  storageBucket: "mi-progreso-d5c1c.firebasestorage.app",
-  messagingSenderId: "873939371230",
-  appId: "1:873939371230:web:9af82381e3c827c66e2e4f"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);");
+let initializeApp,getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut,sendPasswordResetEmail,getFirestore,doc,setDoc,onSnapshot,fbOk=true;
+try{const A=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"),B=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"),C=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+({initializeApp}=A);({getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut,sendPasswordResetEmail}=B);({getFirestore,doc,setDoc,onSnapshot}=C)}catch(e){fbOk=false}
+const firebaseConfig=window.FIREBASE_CONFIG||{apiKey:"PEGA_AQUI"};
+const configured=fbOk&&!String(firebaseConfig.apiKey).startsWith("PEGA");
 const workouts=[
  {name:"Empuje · pecho, hombros y tríceps",type:"Fuerza",items:[["Chest press (máquina)","2 × 10–12 repeticiones","90–120 s"],["Aperturas en máquina (pec deck)","2 × 12–15","60–90 s"],["Shoulder press (máquina)","2 × 10–12","90–120 s"],["Elevaciones laterales","2 × 12–15","60–90 s"],["Extensión de tríceps en polea","2 × 12–15","60–90 s"]]},
  {name:"Tirón · espalda y bíceps",type:"Fuerza",items:[["Jalón al pecho","2 × 10–12","90–120 s"],["Remo sentado","2 × 10–12","90–120 s"],["Remo con pecho apoyado","2 × 10–12","90 s"],["Aperturas inversas en máquina","2 × 12–15","60–90 s"],["Curl de bíceps en máquina o mancuernas","2 × 10–12","60–90 s"]]},
@@ -356,15 +297,17 @@ let armed;$("clearData").onclick=function(){
  armed=false;this.textContent="Borrar mis datos";state={};ensure();save();renderAll();toast("Datos borrados.")};
 function renderAll(){renderHabits();renderDayButtons();renderWorkout(todayDay());renderMeals();renderLogs();renderProgress();renderSummary()}
 let app,auth,db,unsub;
-if(configured){app=initializeApp(firebaseConfig);auth=getAuth(app);db=getFirestore(app)}
-const MSG={"auth/invalid-credential":"Correo o contraseña incorrectos.","auth/invalid-email":"Escribe un correo válido.","auth/email-already-in-use":"Ese correo ya tiene cuenta. Toca “Entrar”.","auth/weak-password":"La contraseña debe tener al menos 6 caracteres.","auth/missing-password":"Escribe tu contraseña.","auth/too-many-requests":"Demasiados intentos. Espera un momento.","auth/network-request-failed":"Sin conexión a internet."};
+let configured2=configured;
+if(configured){try{app=initializeApp(firebaseConfig);auth=getAuth(app);db=getFirestore(app)}catch(e){configured2=false}}
+const MSG={"auth/invalid-credential":"Correo o contraseña incorrectos.","auth/invalid-email":"Escribe un correo válido.","auth/email-already-in-use":"Ese correo ya tiene cuenta. Toca “Entrar”.","auth/weak-password":"La contraseña debe tener al menos 6 caracteres.","auth/missing-password":"Escribe tu contraseña.","auth/too-many-requests":"Demasiados intentos. Espera un momento.","auth/network-request-failed":"Sin conexión a internet.","auth/operation-not-allowed":"Falta activar Correo/contraseña en Firebase, en Authentication.","auth/unauthorized-domain":"Falta añadir este dominio en Firebase, en Authentication, Configuración, Dominios autorizados.","auth/invalid-api-key":"La apiKey está mal copiada en el archivo.","auth/api-key-not-valid":"La apiKey está mal copiada en el archivo."};
 const gateMsg=t=>$("gateMsg").textContent=t;
+window.__ready=true;gateMsg("");
 async function doAuth(create){
  if(!configured){gateMsg("Falta pegar la configuración de Firebase en el archivo.");return}
  const e=$("email").value.trim(),p=$("pass").value;
  if(!e||!p){gateMsg("Escribe tu correo y tu contraseña.");return}
  gateMsg("Un momento…");
- try{if(create)await createUserWithEmailAndPassword(auth,e,p);else await signInWithEmailAndPassword(auth,e,p);gateMsg("")}catch(x){gateMsg(MSG[x.code]||"No se pudo entrar. Intenta de nuevo.")}}
+ try{if(create)await createUserWithEmailAndPassword(auth,e,p);else await signInWithEmailAndPassword(auth,e,p);gateMsg("")}catch(x){gateMsg(MSG[x.code]||"No se pudo entrar ("+(x.code||x.message)+").")}}
 $("enter").onclick=()=>doAuth(false);$("signup").onclick=()=>doAuth(true);
 $("pass").onkeydown=e=>{if(e.key==="Enter")doAuth(false)};
 $("reset").onclick=async()=>{const e=$("email").value.trim();if(!configured||!e){gateMsg("Escribe tu correo y toca de nuevo.");return}try{await sendPasswordResetEmail(auth,e);gateMsg("Te enviamos un correo para cambiar la contraseña.")}catch(x){gateMsg(MSG[x.code]||"No se pudo enviar el correo.")}};
@@ -376,11 +319,11 @@ function startSession(u){
   let r={};try{r=JSON.parse(snap.data().datos)||{}}catch(e){}
   const rt=r.updatedAt||0,lt=state.updatedAt||0;
   if(rt>lt){state=r;ensure();lsSave();renderAll();setSync("Sincronizado")}else if(rt<lt)push();else setSync("Sincronizado")},
-  ()=>setSync("Sin conexión: guardado en este dispositivo"))}
+  e=>setSync(e&&e.code==="permission-denied"?"Faltan las reglas de Firestore":"Sin conexión: guardado en este dispositivo"))}
 function showGate(){user=null;state={};if(unsub){unsub();unsub=null}clearInterval(tm);clearTimeout(hideT);$("timer").hidden=true;document.body.classList.add("gate");$("who").textContent="";setSync("");$("pass").value="";window.scrollTo(0,0)}
 $("logout").onclick=async()=>{clearTimeout(pushT);await push();if(auth)await signOut(auth)};
-if(configured)onAuthStateChanged(auth,u=>u?startSession(u):showGate());
-else{showGate();gateMsg("Falta pegar la configuración de Firebase en el archivo (instrucciones al inicio del archivo).")}
+if(configured2)onAuthStateChanged(auth,u=>u?startSession(u):showGate());
+else{user="local";state=load();ensure();$("logout").hidden=true;document.body.classList.remove("gate");renderAll();showView("inicio");setSync(fbOk?"Sin cuenta: guardado solo en este dispositivo":"Sin conexión con Firebase: guardado solo en este dispositivo")}
 </script>
 </body>
 </html>
