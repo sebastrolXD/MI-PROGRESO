@@ -50,6 +50,7 @@ svg{width:100%;height:auto;display:block}
 #timer{display:flex;justify-content:space-between;align-items:center}#timer button{background:none;border:0;color:inherit;font:inherit;font-weight:700;text-decoration:underline;cursor:pointer;min-height:44px}
 #toast{bottom:calc(76px + env(safe-area-inset-bottom,0px))}
 #gate{display:none;max-width:1000px;margin:auto;padding:0 14px}body.gate #gate{display:block}body.gate nav,body.gate main{display:none}
+body.gate #logout{display:none}
 .footer{color:var(--muted);font-size:.82rem;text-align:center;padding:10px 14px 90px}
 </style>
 </head>
@@ -327,7 +328,7 @@ function startSession(u){
   if(rt>lt){state=r;ensure();lsSave();renderAll();setSync("Sincronizado")}else if(rt<lt)push();else setSync("Sincronizado")},
   e=>setSync(e&&e.code==="permission-denied"?"Faltan las reglas de Firestore":"Sin conexión: guardado en este dispositivo"))}
 function showGate(){user=null;state={};if(unsub){unsub();unsub=null}clearInterval(tm);clearTimeout(hideT);$("timer").hidden=true;document.body.classList.add("gate");$("who").textContent="";setSync("");$("pass").value="";window.scrollTo(0,0)}
-$("logout").onclick=async()=>{clearTimeout(pushT);await push();if(auth)await signOut(auth)};
+$("logout").onclick=async()=>{clearTimeout(pushT);try{await push()}catch(e){}try{if(auth)await signOut(auth)}catch(e){}showGate()};
 if(configured2)onAuthStateChanged(auth,u=>u?startSession(u):showGate());
 else{user="local";state=load();ensure();$("logout").hidden=true;document.body.classList.remove("gate");renderAll();showView("inicio");setSync(fbOk?"Sin cuenta: guardado solo en este dispositivo":"Sin conexión con Firebase: guardado solo en este dispositivo")}
 </script>
